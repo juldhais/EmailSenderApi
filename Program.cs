@@ -30,7 +30,7 @@ app.MapPost("/send", async (EmailRequest request) =>
         var host = builder.Configuration.GetSection("EmailOptions:Host").Value;
         var port = int.Parse(builder.Configuration.GetSection("EmailOptions:Port").Value);
         var sender = builder.Configuration.GetSection("EmailOptions:Sender").Value;
-        var password = Environment.GetEnvironmentVariable("juldhais.net_password");
+        var password = Environment.GetEnvironmentVariable("EmailOptionsPassword");
 
         using var smtpClient = new SmtpClient();
         smtpClient.Host = host;
@@ -59,5 +59,5 @@ app.MapPost("/send", async (EmailRequest request) =>
 
 app.Run();
 
-internal record EmailRequest(string To, string Subject, string Body);
-internal record EmailResponse(bool Success, string Message);
+public record EmailRequest(string To, string Subject, string Body);
+public record EmailResponse(bool Success, string Message);
